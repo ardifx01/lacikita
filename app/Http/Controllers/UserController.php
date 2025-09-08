@@ -14,14 +14,18 @@ class UserController extends Controller
         return view('pengguna', compact('users'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        //
-    }
+        User::create([
+            'name'     => $request['name'],
+            'gender'   => $request['gender'],
+            'nik'      => $request['nik'],
+            'no_hp'    => $request['no_hp'],
+            'email'    => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
 
-    public function store(Request $request)
-    {
-        //
+        return redirect()->route('pengguna')->with('success', 'User berhasil ditambahkan.');
     }
 
     public function show(string $id)

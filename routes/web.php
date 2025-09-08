@@ -13,6 +13,9 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 Route::get('/pengguna', [UserController::class, 'index'])
     ->middleware('auth')
     ->name('pengguna');
+Route::post('/pengguna', [UserController::class, 'create'])
+    ->middleware('auth')
+    ->name('pengguna.create');
 
 Route::get('/template', function () {
     return view('template');

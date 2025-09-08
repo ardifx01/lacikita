@@ -9,7 +9,7 @@
             <ul class="nav-right">
                 <li class="user-profile header-notification">
                     <a href="#" class="waves-effect waves-light">
-                        <img src="{{ asset('assets/images/sistem/' . ($user->gender == 'laki-laki' ? 'user_pria.png' : 'user_wanita.png')) }}"
+                        <img src="{{ asset('assets/images/sistem/' . ($user->gender == 'Laki-laki' ? 'user_pria.png' : 'user_wanita.png')) }}"
                             class="img-radius" alt="User-Image">
                         <span>{{ $user->name }}</span>
                         <i class="ti-angle-down"></i>

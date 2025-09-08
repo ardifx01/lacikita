@@ -32,11 +32,15 @@
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" href="{{ asset('assets/datatables/datatables.min.css') }}">
+    <!-- Notification.css -->
+    <link rel="stylesheet" type="text/css" href="assets/pages/notification/notification.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" type="text/css" href="assets/css/animate.css/css/animate.css">
 </head>
 
 <body>
     @php
-        $user = Auth::user();
+    $user = Auth::user();
     @endphp
 
     <div id="pcoded" class="pcoded">
@@ -89,6 +93,12 @@
     <!-- custom js -->
     <script type="text/javascript" src="assets/pages/dashboard/custom-dashboard.js"></script>
     <script type="text/javascript" src="assets/js/script.js "></script>
+    <!-- notification js -->
+    <script type="text/javascript" src="assets/js/bootstrap-growl.min.js"></script>
+    <script type="text/javascript" src="assets/pages/notification/notification.js"></script>
+    <script src="assets/js/pcoded.min.js"></script>
+    <script src="assets/js/vertical-layout.min.js "></script>
+    <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
 
     <script src="{{ asset('assets/datatables/datatables.min.js') }}"></script>
     <script>
