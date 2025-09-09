@@ -14,7 +14,7 @@ class UserController extends Controller
         return view('pengguna', compact('users'));
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         User::create([
             'name'     => $request['name'],
@@ -25,7 +25,7 @@ class UserController extends Controller
             'password' => Hash::make($request['password']),
         ]);
 
-        return redirect()->route('pengguna')->with('success', 'User berhasil ditambahkan.');
+        return redirect()->route('pengguna')->with('success', ' User berhasil ditambahkan.');
     }
 
     public function show(string $id)
@@ -38,13 +38,11 @@ class UserController extends Controller
         //
     }
 
-    public function update(Request $request, string $id)
+    public function delete($id)
     {
-        //
-    }
+        $user = User::findOrFail($id);
+        $user->delete();
 
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('users.index')->with('success', 'User berhasil dihapus.');
     }
 }

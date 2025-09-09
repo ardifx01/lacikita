@@ -9,14 +9,10 @@ Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
 // Proses login
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 
-// Dashboard (hanya bisa diakses setelah login)
-Route::get('/pengguna', [UserController::class, 'index'])
-    ->middleware('auth')
-    ->name('pengguna');
-Route::post('/pengguna', [UserController::class, 'create'])
-    ->middleware('auth')
-    ->name('pengguna.create');
+// Resource User (pengguna) → otomatis index, create, store, show, edit, update, destroy
+Route::resource('pengguna', UserController::class)->middleware('auth');
 
+// Template
 Route::get('/template', function () {
     return view('template');
 })->middleware('auth')->name('template');

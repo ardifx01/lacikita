@@ -31,7 +31,7 @@
         <div class="page-wrapper">
             <div class="page-body">
                 @if (session('success'))
-                <div class="notifications" data-type="success" data-from="top" data-align="center">
+                <div class="notifications" data-type="success" data-from="top" data-align="center" data-icon="fa fa-check">
                     {{ session('success') }}
                 </div>
                 @endif
@@ -43,7 +43,7 @@
                                 <h5>Tambah Pengguna</h5>
                             </div>
                             <div class="card-block">
-                                <form action="{{ route('pengguna.create') }}" method="POST">
+                                <form action="{{ route('pengguna.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
                                         <div class="col-sm-12">
@@ -116,14 +116,16 @@
                                                     <button class="btn waves-effect waves-light btn-light btn-sm">
                                                         <i class="icofont icofont-user"></i>
                                                     </button>
-                                                    <button class="btn waves-effect waves-light btn-danger btn-sm">
+                                                    <button class="btn waves-effect waves-light btn-danger btn-sm btn-delete"
+                                                        data-id="{{ $user->id }}"
+                                                        data-name="{{ $user->name }}">
                                                         <i class="icofont icofont-bin"></i>
                                                     </button>
                                                 </td>
                                             </tr>
                                             @empty
                                             <tr>
-                                                <td colspan="3" class="text-center">Tidak ada data pengguna</td>
+                                                <td colspan="4" class="text-center">Tidak ada data pengguna</td>
                                             </tr>
                                             @endforelse
                                         </tbody>
@@ -137,4 +139,51 @@
         </div>
     </div>
 </div>
+
+<button class="btn btn-primary" onclick="$('#confirmDeleteModal').modal('show')">Test Modal</button>
+
+<!-- Modal Konfirmasi Delete -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <form id="deleteForm" method="POST">
+                @csrf
+                @method('DELETE')
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi Hapus</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="deleteMessage">Apakah Anda yakin ingin menghapus user ini?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '.btn-delete', function() {
+            var userId = $(this).data('id');
+            var userName = $(this).data('name');
+
+            // Set action form delete ke route resource
+            var url = "{{ route('pengguna.destroy', ':id') }}";
+            url = url.replace(':id', userId);
+            $('#deleteForm').attr('action', url);
+
+            // Tampilkan pesan konfirmasi dengan nama user
+            $('#deleteMessage').text('Apakah Anda yakin ingin menghapus user "' + userName + '"?');
+
+            // Tampilkan modal
+            $('#confirmDeleteModal').modal('show');
+        });
+    });
+</script>
 @endsection

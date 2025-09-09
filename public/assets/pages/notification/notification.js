@@ -1,48 +1,17 @@
-  'use strict';
-$(window).on('load',function(){
-    //Welcome Message (not for login page)
-    function notify(message, type){
-        $.growl({
-            message: message
-        },{
-            type: type,
-            allow_dismiss: false,
-            label: 'Cancel',
-            className: 'btn-xs btn-inverse',
-            placement: {
-                from: 'bottom',
-                align: 'right'
-            },
-            delay: 2500,
-            animate: {
-                    enter: 'animated fadeInRight',
-                    exit: 'animated fadeOutRight'
-            },
-            offset: {
-                x: 30,
-                y: 30
-            }
-        });
-    };
-
-   
-        notify('Welcome to Notification page', 'inverse');
-   
-});
-
+'use strict';
 $(document).ready(function() {
-   
+
     /*--------------------------------------
          Notifications & Dialogs
      ---------------------------------------*/
     /*
      * Notifications
      */
-    function notify(from, align, icon, type, animIn, animOut){
+    function notify(from, align, icon, type, animIn, animOut, message){
         $.growl({
             icon: icon,
-            title: ' Bootstrap Growl ',
-            message: 'Turning standard Bootstrap alerts into awesome notifications',
+            title: '', // tidak perlu title
+            message: message || 'Turning standard Bootstrap alerts into awesome notifications',
             url: ''
         },{
             element: 'body',
@@ -80,7 +49,8 @@ $(document).ready(function() {
         });
     };
 
-    $('.notifications .btn').on('click',function(e){
+    // event tombol demo
+    $('.notifications .btn').on('click', function(e){
         e.preventDefault();
         var nFrom = $(this).attr('data-from');
         var nAlign = $(this).attr('data-align');
@@ -92,5 +62,22 @@ $(document).ready(function() {
         notify(nFrom, nAlign, nIcons, nType, nAnimIn, nAnimOut);
     });
 
-});
+    // otomatis dari flash message Laravel
+    var $autoNotif = $('.notifications[data-type]');
+    if ($autoNotif.length) {
+        $autoNotif.each(function(){
+            var $el = $(this);
+            var nFrom = $el.data('from');
+            var nAlign = $el.data('align');
+            var nIcons = $el.data('icon') || 'fa fa-check';
+            var nType = $el.data('type');
+            var message = $el.text().trim();
 
+            notify(nFrom, nAlign, nIcons, nType, 'animated fadeInDown', 'animated fadeOutUp', message);
+
+            // hapus elemen agar teks tidak tampil di halaman
+            $el.remove();
+        });
+    }
+
+});
